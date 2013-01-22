@@ -39,6 +39,7 @@ $app->register(new AwsServiceProvider(), array(
         'region' => Region::US_EAST_1
     )
 ));
+// Note: You can also do 'aws.config' => '/path/to/aws/config/file.php'
 
 $app->match('/', function () use ($app) {
     $s3 = $app['aws']->get('s3');
@@ -59,6 +60,6 @@ $app->run();
 ## Links
 
 * [AWS SDK for PHP on Github](http://github.com/aws/aws-sdk-php)
-* [AWS SDK for PHP website](http://aws.amazon.com/sdkforphp2)
+* [AWS SDK for PHP website](http://aws.amazon.com/sdkforphp/)
 * [License](http://aws.amazon.com/apache2.0/)
 * [Silex website](http://silex.sensiolabs.org)
