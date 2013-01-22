@@ -1,0 +1,23 @@
+{
+    "name": "aws/aws-sdk-php-silex",
+    "homepage": "http://aws.amazon.com/sdkforphp2",
+    "description": "A simple Silex service provider for including the AWS SDK for PHP.",
+    "keywords": ["silex","aws","amazon","sdk","s3","ec2","dynamodb"],
+    "type":"library",
+    "license":"Apache-2.0",
+    "authors":[
+        {
+            "name":"Amazon Web Services",
+            "homepage":"http://aws.amazon.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "aws/aws-sdk-php": "2.*",
+        "silex/silex": "1.0.*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { "Aws\\Silex": "src/" }
+    }
+}
