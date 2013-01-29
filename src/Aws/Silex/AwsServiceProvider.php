@@ -17,6 +17,9 @@
 namespace Aws\Silex;
 
 use Aws\Common\Aws;
+use Aws\Common\Client\UserAgentListener;
+use Guzzle\Common\Event;
+use Guzzle\Service\Client;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
@@ -31,7 +34,19 @@ class AwsServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['aws'] = $app->share(function (Application $app) {
-            return Aws::factory($app['aws.config']);
+            // Instantiate the AWS service builder
+            $aws = Aws::factory($app['aws.config']);
+
+            // Attach an event listener that will append the Silex version number in the user agent string
+            $aws->getEventDispatcher()->addListener('service_builder.create_client', function (Event $event) {
+                $clientConfig = $event['client']->getConfig();
+                $commandParams = $clientConfig->get(Client::COMMAND_PARAMS) ?: array();
+                $clientConfig->set(Client::COMMAND_PARAMS, array_merge_recursive($commandParams, array(
+                    UserAgentListener::OPTION => 'Silex/' . Application::VERSION
+                )));
+            });
+
+            return $aws;
         });
     }
 

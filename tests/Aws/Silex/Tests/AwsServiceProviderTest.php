@@ -26,6 +26,7 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function testRegisterAwsServiceProvider()
     {
+        // Setup the Silex app and AWS service provider
         $app = new Application();
         $provider = new AwsServiceProvider();
         $app->register($provider, array(
@@ -36,10 +37,19 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         ));
         $provider->boot($app);
 
+        // Get an instance of a client (S3) to use for testing
+        $s3 = $app['aws']->get('s3');
+
         // Verify that the app and clients created by the SDK receive the provided credentials
         $this->assertEquals('your-aws-access-key-id', $app['aws.config']['key']);
         $this->assertEquals('your-aws-secret-access-key', $app['aws.config']['secret']);
-        $this->assertEquals('your-aws-access-key-id', $app['aws']->get('s3')->getCredentials()->getAccessKeyId());
-        $this->assertEquals('your-aws-secret-access-key', $app['aws']->get('s3')->getCredentials()->getSecretKey());
+        $this->assertEquals('your-aws-access-key-id', $s3->getCredentials()->getAccessKeyId());
+        $this->assertEquals('your-aws-secret-access-key', $s3->getCredentials()->getSecretKey());
+
+        // Make sure the user agent contains "Silex"
+        $command = $s3->getCommand('ListBuckets');
+        $request = $command->prepare();
+        $s3->dispatch('command.before_send', array('command' => $command));
+        $this->assertRegExp('/.+Silex\/.+/', $request->getHeader('User-Agent', true));
     }
 }
