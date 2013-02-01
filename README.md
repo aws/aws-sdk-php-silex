@@ -4,20 +4,23 @@ A simple Silex service provider for including the [AWS SDK for PHP](https://gith
 
 ## Installation
 
-The AWS Service Provider can be installed via [Composer](http://getcomposer.org) by requiring the following package:
+The AWS Service Provider can be installed via [Composer](http://getcomposer.org) by requiring the
+`aws/aws-sdk-php-silex` package and setting the `minimum-stability` to `dev` (required for Silex) in your project's
+`composer.json`.
 
 ```json
 {
     "require": {
         "aws/aws-sdk-php-silex": "1.*"
-    }
+    },
+    "minimum-stability": "dev"
 }
 ```
 
 ## Usage
 
 Register the AWS Service Provider in your Silex application and provide your AWS SDK for PHP configuration to the app
-in the `aws.config` key. `$app['aws.config']` should be contain an array of configuration options or the path to a
+in the `aws.config` key. `$app['aws.config']` should contain an array of configuration options or the path to a
 configuration file. This value is passed directly into `Aws\Common\Aws::factory()`.
 
 ```php
@@ -28,7 +31,6 @@ require __DIR__ . '/vendor/autoload.php';
 use Aws\Common\Enum\Region;
 use Aws\Silex\AwsServiceProvider;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Response;
 
 $app = new Application();
 
@@ -39,19 +41,20 @@ $app->register(new AwsServiceProvider(), array(
         'region' => Region::US_EAST_1
     )
 ));
-// Note: You can also do 'aws.config' => '/path/to/aws/config/file.php'
+// Note: You can also specify a path to a config file (e.g., 'aws.config' => '/path/to/aws/config/file.php')
 
 $app->match('/', function () use ($app) {
+    // Get the Amazon S3 client
     $s3 = $app['aws']->get('s3');
-    $buckets = $s3->getIterator('ListBuckets');
 
+    // Create a list of the buckets in your account
     $output = "<ul>\n";
-    foreach ($buckets as $bucket) {
+    foreach ($s3->getIterator('ListBuckets') as $bucket) {
         $output .= "<li>{$bucket['Name']}</li>\n";
     }
     $output .= "</ul>\n";
 
-    return new Response($output);
+    return $output;
 });
 
 $app->run();
@@ -61,5 +64,6 @@ $app->run();
 
 * [AWS SDK for PHP on Github](http://github.com/aws/aws-sdk-php)
 * [AWS SDK for PHP website](http://aws.amazon.com/sdkforphp/)
+* [AWS on Packagist](https://packagist.org/packages/aws)
 * [License](http://aws.amazon.com/apache2.0/)
 * [Silex website](http://silex.sensiolabs.org)
