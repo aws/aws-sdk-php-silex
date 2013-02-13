@@ -52,4 +52,20 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         $s3->dispatch('command.before_send', array('command' => $command));
         $this->assertRegExp('/.+Silex\/.+/', $request->getHeader('User-Agent', true));
     }
+
+    /**
+     * @expectedException \Aws\Common\Exception\InstanceProfileCredentialsException
+     */
+    public function testNoConfigProvided()
+    {
+        // Setup the Silex app and AWS service provider
+        $app = new Application();
+        $provider = new AwsServiceProvider();
+        $app->register($provider);
+        $provider->boot($app);
+
+        // Instantiate a client and get the access key, which should trigger an exception trying to use IAM credentials
+        $s3 = $app['aws']->get('s3');
+        $s3->getCredentials()->getAccessKeyId();
+    }
 }
