@@ -33,10 +33,11 @@ class AwsServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $app['aws.config'] = array();
+
         $app['aws'] = $app->share(function (Application $app) {
             // Instantiate the AWS service builder
-            $config = isset($app['aws.config']) ? $app['aws.config'] : array();
-            $aws = Aws::factory($config);
+            $aws = Aws::factory($app['aws.config']);
 
             // Attach an event listener that will append the Silex version number in the user agent string
             $aws->getEventDispatcher()->addListener('service_builder.create_client', function (Event $event) {
