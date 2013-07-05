@@ -1,5 +1,8 @@
 # AWS Service Provider for Silex
 
+[![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php-silex/v/stable.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
+[![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php-silex/downloads.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
+
 A simple Silex service provider for including the [AWS SDK for PHP](https://github.com/aws/aws-sdk-php).
 
 ## Installation
@@ -28,7 +31,6 @@ configuration file. This value is passed directly into `Aws\Common\Aws::factory(
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Aws\Common\Enum\Region;
 use Aws\Silex\AwsServiceProvider;
 use Silex\Application;
 
@@ -38,10 +40,11 @@ $app->register(new AwsServiceProvider(), array(
     'aws.config' => array(
         'key'    => 'your-aws-access-key-id',
         'secret' => 'your-aws-secret-access-key',
-        'region' => Region::US_EAST_1
+        'region' => 'us-east-1',
     )
 ));
-// Note: You can also specify a path to a config file (e.g., 'aws.config' => '/path/to/aws/config/file.php')
+// Note: You can also specify a path to a config file
+// (e.g., 'aws.config' => '/path/to/aws/config/file.php')
 
 $app->match('/', function () use ($app) {
     // Get the Amazon S3 client
