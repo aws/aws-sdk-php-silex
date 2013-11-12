@@ -28,9 +28,8 @@ use Silex\ServiceProviderInterface;
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
-    /**
-     * @inheritdoc
-     */
+    const VERSION = '1.1.0';
+
     public function register(Application $app)
     {
         $app['aws'] = $app->share(function (Application $app) {
@@ -42,8 +41,9 @@ class AwsServiceProvider implements ServiceProviderInterface
             $aws->getEventDispatcher()->addListener('service_builder.create_client', function (Event $event) {
                 $clientConfig = $event['client']->getConfig();
                 $commandParams = $clientConfig->get(Client::COMMAND_PARAMS) ?: array();
+                $userAgentData = 'Silex/' . Application::VERSION . ' SXMOD/' . AwsServiceProvider::VERSION;
                 $clientConfig->set(Client::COMMAND_PARAMS, array_merge_recursive($commandParams, array(
-                    UserAgentListener::OPTION => 'Silex/' . Application::VERSION
+                    UserAgentListener::OPTION => $userAgentData
                 )));
             });
 
@@ -51,9 +51,6 @@ class AwsServiceProvider implements ServiceProviderInterface
         });
     }
 
-    /**
-     * @inheritdoc
-     */
     public function boot(Application $app)
     {
     }

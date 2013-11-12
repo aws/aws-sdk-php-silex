@@ -13,10 +13,9 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "aws/aws-sdk-php": "~2.0",
-        "silex/silex": "~1.0"
+        "aws/aws-sdk-php": "2.*",
+        "silex/silex": "1.*"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Aws\\Silex": "src/" }
     },

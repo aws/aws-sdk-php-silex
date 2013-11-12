@@ -50,7 +50,7 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         $command = $s3->getCommand('ListBuckets');
         $request = $command->prepare();
         $s3->dispatch('command.before_send', array('command' => $command));
-        $this->assertRegExp('/.+Silex\/.+/', $request->getHeader('User-Agent', true));
+        $this->assertRegExp('/.+Silex\/.+/', (string) $request->getHeader('User-Agent'));
     }
 
     /**

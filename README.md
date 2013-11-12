@@ -8,15 +8,13 @@ A simple Silex service provider for including the [AWS SDK for PHP](https://gith
 ## Installation
 
 The AWS Service Provider can be installed via [Composer](http://getcomposer.org) by requiring the
-`aws/aws-sdk-php-silex` package and setting the `minimum-stability` to `dev` (required for Silex) in your project's
-`composer.json`.
+`aws/aws-sdk-php-silex` package in your project's `composer.json`.
 
 ```json
 {
     "require": {
         "aws/aws-sdk-php-silex": "1.*"
-    },
-    "minimum-stability": "dev"
+    }
 }
 ```
 
@@ -52,7 +50,7 @@ $app->match('/', function () use ($app) {
 
     // Create a list of the buckets in your account
     $output = "<ul>\n";
-    foreach ($s3->getIterator('ListBuckets') as $bucket) {
+    foreach ($s3->getListBucketsIterator() as $bucket) {
         $output .= "<li>{$bucket['Name']}</li>\n";
     }
     $output .= "</ul>\n";
