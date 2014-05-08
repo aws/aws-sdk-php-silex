@@ -33,7 +33,7 @@ class AwsServiceProvider implements ServiceProviderInterface
 
     public function register(Container $container)
     {
-        $container['aws'] = $container->share(function (Container $container) {
+        $container['aws'] = function (Container $container) {
             // Instantiate the AWS service builder
             $config = isset($container['aws.config']) ? $container['aws.config'] : array();
             $aws = Aws::factory($config);
@@ -49,6 +49,6 @@ class AwsServiceProvider implements ServiceProviderInterface
             });
 
             return $aws;
-        });
+        };
     }
 }
