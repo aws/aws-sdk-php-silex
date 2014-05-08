@@ -20,21 +20,22 @@ use Aws\Common\Aws;
 use Aws\Common\Client\UserAgentListener;
 use Guzzle\Common\Event;
 use Guzzle\Service\Client;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
 
 /**
  * AWS SDK for PHP service provider for Silex applications
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
-    const VERSION = '1.1.0';
+    const VERSION = '2.0.0';
 
-    public function register(Application $app)
+    public function register(Container $container)
     {
-        $app['aws'] = $app->share(function (Application $app) {
+        $container['aws'] = function (Container $container) {
             // Instantiate the AWS service builder
-            $config = isset($app['aws.config']) ? $app['aws.config'] : array();
+            $config = isset($container['aws.config']) ? $container['aws.config'] : array();
             $aws = Aws::factory($config);
 
             // Attach an event listener that will append the Silex version number in the user agent string
@@ -48,10 +49,6 @@ class AwsServiceProvider implements ServiceProviderInterface
             });
 
             return $aws;
-        });
-    }
-
-    public function boot(Application $app)
-    {
+        };
     }
 }
