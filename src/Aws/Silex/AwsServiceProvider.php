@@ -29,7 +29,7 @@ use Silex\Application;
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
-    const VERSION = '1.1.0';
+    const VERSION = '2.0.0';
 
     public function register(Container $container)
     {
