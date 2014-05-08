@@ -51,8 +51,4 @@ class AwsServiceProvider implements ServiceProviderInterface
             return $aws;
         });
     }
-
-    public function boot(Application $app)
-    {
-    }
 }

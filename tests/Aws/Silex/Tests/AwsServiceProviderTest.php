@@ -35,7 +35,6 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
                 'secret' => 'your-aws-secret-access-key',
             )
         ));
-        $provider->boot($app);
 
         // Get an instance of a client (S3) to use for testing
         $s3 = $app['aws']->get('s3');
@@ -62,7 +61,6 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = new Application();
         $provider = new AwsServiceProvider();
         $app->register($provider);
-        $provider->boot($app);
 
         // Instantiate a client and get the access key, which should trigger an exception trying to use IAM credentials
         $s3 = $app['aws']->get('s3');
