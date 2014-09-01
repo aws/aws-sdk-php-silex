@@ -14,24 +14,20 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Silex;
+namespace Aws\Cilex;
 
 use Aws\Pimple\AwsServiceProvider as PimpleAwsServiceProvider;
-use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Cilex\Application;
+use Cilex\ServiceProviderInterface;
 
 /**
- * AWS SDK for PHP service provider for Silex applications
+ * AWS SDK for PHP service provider for Cilex applications
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
         $pimpleServiceProvider = new PimpleAwsServiceProvider;
-        $pimpleServiceProvider->register($app, 'Silex', Application::VERSION);
-    }
-
-    public function boot(Application $app)
-    {
+        $pimpleServiceProvider->register($app, 'Cilex', Application::VERSION);
     }
 }
