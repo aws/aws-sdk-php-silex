@@ -14,10 +14,20 @@
     "require": {
         "php": ">=5.3.3",
         "aws/aws-sdk-php": "2.*",
-        "silex/silex": "1.*"
+        "pimple/pimple": "1.*"
+    },
+    "require-dev": {
+        "cilex/cilex": "1.*@dev",
+        "silex/silex": "1.*@dev",
+        "cilex/console-service-provider": "@dev",
+        "phpunit/phpunit": "4.*"
     },
     "autoload": {
-        "psr-0": { "Aws\\Silex": "src/" }
+        "psr-0": {
+            "Aws\\Cilex": "src/",
+            "Aws\\Pimple": "src/",
+            "Aws\\Silex": "src/"
+        }
     },
     "extra": {
         "branch-alias": {
