@@ -14,14 +14,14 @@
     "require": {
         "php": ">=5.3.3",
         "aws/aws-sdk-php": "2.*",
-        "silex/silex": "1.*"
+        "silex/silex": "2.*@dev"
     },
     "autoload": {
         "psr-0": { "Aws\\Silex": "src/" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
         }
     }
 }

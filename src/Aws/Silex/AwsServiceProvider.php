@@ -21,18 +21,19 @@ use Aws\Common\Client\UserAgentListener;
 use Guzzle\Common\Event;
 use Guzzle\Service\Client;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 
 /**
  * AWS SDK for PHP service provider for Silex applications
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
-    const VERSION = '1.1.0';
+    const VERSION = '2.0.0';
 
-    public function register(Application $app)
+    public function register(Container $app)
     {
-        $app['aws'] = $app->share(function (Application $app) {
+        $app['aws'] = function (Container $app) {
             // Instantiate the AWS service builder
             $config = isset($app['aws.config']) ? $app['aws.config'] : array();
             $aws = Aws::factory($config);
@@ -48,10 +49,6 @@ class AwsServiceProvider implements ServiceProviderInterface
             });
 
             return $aws;
-        });
-    }
-
-    public function boot(Application $app)
-    {
+        };
     }
 }
