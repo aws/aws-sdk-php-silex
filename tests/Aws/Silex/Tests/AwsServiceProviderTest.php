@@ -16,7 +16,6 @@
 
 namespace Aws\Silex\Tests;
 
-use Aws\S3\S3Client;
 use Aws\Silex\AwsServiceProvider;
 use Silex\Application;
 
