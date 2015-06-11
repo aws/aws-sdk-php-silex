@@ -1,6 +1,7 @@
 # AWS Service Provider for Silex
 
 [![@awsforphp on Twitter](http://img.shields.io/badge/twitter-%40awsforphp-blue.svg?style=flat)](https://twitter.com/awsforphp)
+[![Build Status](https://travis-ci.org/aws/aws-sdk-php-silex.svg)](https://travis-ci.org/aws/aws-sdk-php-silex)
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php-silex/v/stable.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php-silex/downloads.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
 

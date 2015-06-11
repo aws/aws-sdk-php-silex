@@ -33,6 +33,10 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
             'aws.config' => array(
                 'version' => '2006-03-01',
                 'region' => 'us-east-1',
+                'credentials' => [
+                    'key' => 'fake-aws-key',
+                    'secret' => 'fake-aws-secret',
+                ],
             )
         ));
         $provider->boot($app);
@@ -55,7 +59,14 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         // Setup the Silex app and AWS service provider
         $app = new Application();
         $provider = new AwsServiceProvider();
-        $app->register($provider);
+        $app->register($provider, array(
+            'aws.config' => array(
+                'credentials' => [
+                    'key' => 'fake-aws-key',
+                    'secret' => 'fake-aws-secret',
+                ],
+            )
+        ));
         $provider->boot($app);
 
         // Instantiate a client, which should trigger an exception for missing configs

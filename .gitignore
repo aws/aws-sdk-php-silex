@@ -1,3 +1,6 @@
+/.idea
+aws-sdk-php-silex.iml
+
 composer.lock
 composer.phar
 phpunit.xml
