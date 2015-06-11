@@ -16,6 +16,7 @@
 
 namespace Aws\Silex\Tests;
 
+use Aws\S3\S3Client;
 use Aws\Silex\AwsServiceProvider;
 use Silex\Application;
 
@@ -31,30 +32,24 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         $provider = new AwsServiceProvider();
         $app->register($provider, array(
             'aws.config' => array(
-                'key'    => 'your-aws-access-key-id',
-                'secret' => 'your-aws-secret-access-key',
+                'version' => '2006-03-01',
+                'region' => 'us-east-1',
             )
         ));
         $provider->boot($app);
 
         // Get an instance of a client (S3) to use for testing
-        $s3 = $app['aws']->get('s3');
+        $s3 = $app['aws']->createS3();
 
         // Verify that the app and clients created by the SDK receive the provided credentials
-        $this->assertEquals('your-aws-access-key-id', $app['aws.config']['key']);
-        $this->assertEquals('your-aws-secret-access-key', $app['aws.config']['secret']);
-        $this->assertEquals('your-aws-access-key-id', $s3->getCredentials()->getAccessKeyId());
-        $this->assertEquals('your-aws-secret-access-key', $s3->getCredentials()->getSecretKey());
-
-        // Make sure the user agent contains "Silex"
-        $command = $s3->getCommand('ListBuckets');
-        $request = $command->prepare();
-        $s3->dispatch('command.before_send', array('command' => $command));
-        $this->assertRegExp('/.+Silex\/.+/', (string) $request->getHeader('User-Agent'));
+        $this->assertEquals('2006-03-01', $app['aws.config']['version']);
+        $this->assertEquals('us-east-1', $app['aws.config']['region']);
+        $this->assertEquals('2006-03-01', $s3->getApi()->getApiVersion());
+        $this->assertEquals('us-east-1', $s3->getRegion());
     }
 
     /**
-     * @expectedException \Aws\Common\Exception\InstanceProfileCredentialsException
+     * @expectedException \InvalidArgumentException
      */
     public function testNoConfigProvided()
     {
@@ -64,8 +59,7 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app->register($provider);
         $provider->boot($app);
 
-        // Instantiate a client and get the access key, which should trigger an exception trying to use IAM credentials
-        $s3 = $app['aws']->get('s3');
-        $s3->getCredentials()->getAccessKeyId();
+        // Instantiate a client, which should trigger an exception for missing configs
+        $s3 = $app['aws']->createS3();
     }
 }
