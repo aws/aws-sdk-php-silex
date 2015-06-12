@@ -17,7 +17,14 @@
         "silex/silex": "1.*"
     },
     "autoload": {
-        "psr-0": { "Aws\\Silex": "src/" }
+        "psr-4": {
+            "Aws\\Silex\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aws\\Silex\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {
@@ -25,6 +32,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.7"
+        "phpunit/phpunit": "~4.7",
+        "squizlabs/php_codesniffer": "^2.3"
     }
 }
