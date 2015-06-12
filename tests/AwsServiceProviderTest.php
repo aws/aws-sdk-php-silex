@@ -14,9 +14,8 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Silex\Tests;
+namespace Aws\Silex;
 
-use Aws\Silex\AwsServiceProvider;
 use Silex\Application;
 
 /**
