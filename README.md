@@ -1,5 +1,7 @@
 # AWS Service Provider for Silex
 
+[![@awsforphp on Twitter](http://img.shields.io/badge/twitter-%40awsforphp-blue.svg?style=flat)](https://twitter.com/awsforphp)
+[![Build Status](https://travis-ci.org/aws/aws-sdk-php-silex.svg)](https://travis-ci.org/aws/aws-sdk-php-silex)
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php-silex/v/stable.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php-silex/downloads.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
 
@@ -13,7 +15,7 @@ The AWS Service Provider can be installed via [Composer](http://getcomposer.org)
 ```json
 {
     "require": {
-        "aws/aws-sdk-php-silex": "1.*"
+        "aws/aws-sdk-php-silex": "~2.0"
     }
 }
 ```
@@ -22,7 +24,7 @@ The AWS Service Provider can be installed via [Composer](http://getcomposer.org)
 
 Register the AWS Service Provider in your Silex application and provide your AWS SDK for PHP configuration to the app
 in the `aws.config` key. `$app['aws.config']` should contain an array of configuration options or the path to a
-configuration file. This value is passed directly into `Aws\Common\Aws::factory()`.
+configuration file. This value is passed directly into `new Aws\Sdk`.
 
 ```php
 <?php
@@ -36,8 +38,7 @@ $app = new Application();
 
 $app->register(new AwsServiceProvider(), array(
     'aws.config' => array(
-        'key'    => 'your-aws-access-key-id',
-        'secret' => 'your-aws-secret-access-key',
+        'version' => 'latest',
         'region' => 'us-east-1',
     )
 ));
@@ -46,7 +47,7 @@ $app->register(new AwsServiceProvider(), array(
 
 $app->match('/', function () use ($app) {
     // Get the Amazon S3 client
-    $s3 = $app['aws']->get('s3');
+    $s3 = $app['aws']->createS3();
 
     // Create a list of the buckets in your account
     $output = "<ul>\n";
