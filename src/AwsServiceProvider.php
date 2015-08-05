@@ -25,14 +25,17 @@ use Silex\ServiceProviderInterface;
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
-    const VERSION = '2.0.0';
+    const VERSION = '2.0.2';
 
     public function register(Application $app)
     {
         $app['aws'] = $app->share(function (Application $app) {
-            $aws = new Sdk(isset($app['aws.config']) ? $app['aws.config'] : []);
+            $config = isset($app['aws.config']) ? $app['aws.config'] : [];
 
-            return $aws;
+            return new Sdk($config + ['ua_append' => [
+                'Silex/' . Application::VERSION,
+                'SXMOD/' . self::VERSION,
+            ]]);
         });
     }
 
