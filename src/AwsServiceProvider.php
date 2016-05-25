@@ -17,29 +17,26 @@
 namespace Aws\Silex;
 
 use Aws\Sdk;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
 
 /**
  * AWS SDK for PHP service provider for Silex applications
  */
 class AwsServiceProvider implements ServiceProviderInterface
 {
-    const VERSION = '2.0.2';
+    const VERSION = '3.0.0';
 
-    public function register(Application $app)
+    public function register(Container $container)
     {
-        $app['aws'] = $app->share(function (Application $app) {
-            $config = isset($app['aws.config']) ? $app['aws.config'] : [];
+        $container['aws'] = function (Application $container) {
+            $config = isset($container['aws.config']) ? $container['aws.config'] : [];
 
             return new Sdk($config + ['ua_append' => [
                 'Silex/' . Application::VERSION,
                 'SXMOD/' . self::VERSION,
             ]]);
-        });
-    }
-
-    public function boot(Application $app)
-    {
+        };
     }
 }
