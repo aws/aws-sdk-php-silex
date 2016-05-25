@@ -38,7 +38,6 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
                 ],
             )
         ));
-        $provider->boot($app);
 
         // Get an instance of a client (S3) to use for testing
         $s3 = $app['aws']->createS3();
@@ -66,7 +65,6 @@ class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
                 ],
             )
         ));
-        $provider->boot($app);
 
         // Instantiate a client, which should trigger an exception for missing configs
         $s3 = $app['aws']->createS3();
