@@ -5,7 +5,11 @@
 [![Latest Stable Version](https://poser.pugx.org/aws/aws-sdk-php-silex/v/stable.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
 [![Total Downloads](https://poser.pugx.org/aws/aws-sdk-php-silex/downloads.png)](https://packagist.org/packages/aws/aws-sdk-php-silex)
 
-A simple Silex service provider for including the [AWS SDK for PHP](https://github.com/aws/aws-sdk-php).
+A simple Silex 2 / Pimple 3 service provider for including the [AWS SDK for PHP](https://github.com/aws/aws-sdk-php).
+
+note:
+    If you are using the 1.x Silex version, Use [version 2.x]
+    (https://github.com/aws/aws-sdk-php-silex/tree/2.0) of this provider.
 
 ## Installation
 
