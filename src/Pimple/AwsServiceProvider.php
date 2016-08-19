@@ -25,7 +25,7 @@ use Guzzle\Service\Client;
  */
 class AwsServiceProvider
 {
-    const VERSION = '2.0.2';
+    const VERSION = '2.1.0';
 
     public function register(\Pimple $app, $type = 'Pimple', $version = '0.0.0')
     {
