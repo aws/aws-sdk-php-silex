@@ -14,32 +14,27 @@
  * permissions and limitations under the License.
  */
 
-namespace Aws\Silex;
+namespace Aws\Pimple;
 
 use Aws\Sdk;
-use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Guzzle\Common\Event;
+use Guzzle\Service\Client;
 
 /**
- * AWS SDK for PHP service provider for Silex applications
+ * AWS SDK for PHP service provider for Pimple based applications
  */
-class AwsServiceProvider implements ServiceProviderInterface
+class AwsServiceProvider
 {
-    const VERSION = '2.0.2';
+    const VERSION = '2.1.0';
 
-    public function register(Application $app)
+    public function register(\Pimple $app, $type = 'Pimple', $version = '0.0.0')
     {
-        $app['aws'] = $app->share(function (Application $app) {
+        $app['aws'] = $app->share(function (\Pimple $app) use ($type, $version) {
             $config = isset($app['aws.config']) ? $app['aws.config'] : [];
-
             return new Sdk($config + ['ua_append' => [
-                'Silex/' . Application::VERSION,
+                $type . '/' . $version,
                 'SXMOD/' . self::VERSION,
             ]]);
         });
-    }
-
-    public function boot(Application $app)
-    {
     }
 }

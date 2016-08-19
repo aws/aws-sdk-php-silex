@@ -18,12 +18,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Aws\\Silex\\": "src/"
+            "Aws\\Cilex\\": "src/Cilex",
+            "Aws\\Pimple\\": "src/Pimple",
+            "Aws\\Silex\\": "src/Silex"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Aws\\Silex\\": "tests/"
+            "Aws\\Cilex\\": "tests/Cilex",
+            "Aws\\Pimple\\": "tests/Pimple",
+            "Aws\\Silex\\": "tests/Silex"
         }
     },
     "extra": {
@@ -32,6 +36,8 @@
         }
     },
     "require-dev": {
+        "pimple/pimple": "~1.0",
+        "cilex/cilex": "~1.0",
         "phpunit/phpunit": "~4.7",
         "squizlabs/php_codesniffer": "^2.3"
     }
