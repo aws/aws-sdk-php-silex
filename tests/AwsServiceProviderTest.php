@@ -17,11 +17,12 @@
 namespace Aws\Silex;
 
 use Silex\Application;
+use PHPUnit\Framework\TestCase;
 
 /**
  * AwsServiceProvider test cases
  */
-class AwsServiceProviderTest extends \PHPUnit_Framework_TestCase
+class AwsServiceProviderTest extends TestCase
 {
     public function testRegisterAwsServiceProvider()
     {
